@@ -1,6 +1,8 @@
 const superagent= require('superagent')
 const cheerio = require('cheerio')
 
+const con = require('./concat')
+
 const fs = require("fs")
 
 const timeoutDefault = {
@@ -8,34 +10,56 @@ const timeoutDefault = {
     deadline: 100000 // 10 second timeout
 }
 
-const teBase = "https://www.the-shops.co.uk/chainstore/173-tesco/"
+const tesco = "https://www.the-shops.co.uk/chainstore/224-sainsburys/"
+const sainsbury = "https://www.the-shops.co.uk/chainstore/224-sainsburys/"
+const aldi = "https://www.the-shops.co.uk/chainstore/241-aldi/"
+
+
+// IMPORTANT 
+// You will need to Manually download chainstore-markers json from the link XHR request above. named it geo_<name>.json
+// Easy to find them on Chrome Dev Tool > Network > XHR
+
+
+/*let geo_s = JSON.parse(fs.readFileSync('./geo_' + 'sainsbury' + '.json', 'utf8'))
+let geo_t = JSON.parse(fs.readFileSync('./geo_' + 'tesco' + '.json', 'utf8'))
+let geo_aldi = JSON.parse(fs.readFileSync('./geo_' + 'aldi' + '.json', 'utf8'))*/
 
 let allAll = []
 
-run()
+// Get sainsbury
+run(sainsbury, "sainsbury", 14, (res)=>{
+    con.make(res, "sainsbury")
+})
 
-async function run(){
+// Get Tesco
+run(tesco, "tesco", 39, (res)=>{
+    con.make(res, "tesco")
+})
+
+async function run(source, geo_fn, pageLen, callback){
+
+    let geo_file = JSON.parse(fs.readFileSync('./geo_' + geo_fn + '.json', 'utf8'))
 
     //console.log(await getTe(teBase))
-    for(let i=1;i<40;i++){
+    for(let i=1;i<pageLen+1;i++){
 
         if(i == 1){
-            allAll.push(await getTe(teBase))
+            allAll.push(await getTe(source, geo_file))
         } else {
-            allAll.push(await getTe(teBase + i))
+            allAll.push(await getTe(source + i, geo_file))
         }
 
-        if(i == 39){
-            fs.writeFileSync('tesco_ready.json', JSON.stringify(allAll))
+        if(i == pageLen){
+            //fs.writeFileSync('sainsbury_ready.json', JSON.stringify(allAll))
+            callback(allAll)
         }
         
     }
 }
 
 
-let geo = JSON.parse(fs.readFileSync('./geo.json', 'utf8'));
 
-function getTe(url){
+function getTe(url, geo){
 
     return new Promise(resolve => {
 
@@ -83,7 +107,7 @@ function getTe(url){
                     tmp.add = add
                     
                     // Get geo location
-                    let fullGeo = getLocFromGeo(id)
+                    let fullGeo = getLocFromGeo(id, geo)
                     if(fullGeo != -1){
                         tmp.longitude = fullGeo.lon
                         tmp.latitude = fullGeo.lat
@@ -103,7 +127,7 @@ function getTe(url){
     })
 }
 
-function getLocFromGeo (id) {
+function getLocFromGeo (id, geo) {
     for(let i=0;i<geo.length;i++){
         if(id == geo[i].id){
             return geo[i]
