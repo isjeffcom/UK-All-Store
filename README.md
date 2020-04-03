@@ -3,8 +3,10 @@
 
 Get a list of all Tesco stores
 
-1. run `index.js` and data saved in tesco_ready.json
-2. run `concat.js` combine all data to one json
+edit and run `index.js` and data saved in tesco_ready.json
+
+You will need to Manually download chainstore-markers json from the link XHR request above. named it geo_<name>.json
+Easy to find them on Chrome Dev Tool > Network > XHR
 
 // Sorry I am a bad coder
 
