@@ -16,10 +16,11 @@ const aldi = "https://www.the-shops.co.uk/chainstore/241-aldi/"
 const asda = "https://www.the-shops.co.uk/chainstore/323-asda"
 const boots = "https://www.the-shops.co.uk/chainstore/252-boots"
 const coop = "https://www.the-shops.co.uk/chainstore/340-the-co-operative-food"
+const lidl = "https://www.the-shops.co.uk/chainstore/320-lidl"
 
 
-// IMPORTANT 
-// You will need to Manually download chainstore-markers json from the link XHR request above. named it geo_<name>.json
+// IMPORTANT IMPORTANT IMPORTANT IMPORTANT IMPORTANT IMPORTANT IMPORTANT
+// You will need to Manually download chainstore-markers json from the link XHR request above. named it ./geo/geo_<name>.json
 // Easy to find them on Chrome Dev Tool > Network > XHR
 
 
@@ -55,6 +56,11 @@ run(boots, "boots", 47, (res)=>{
 // Get Boots
 run(coop, "coop", 39, (res)=>{
     con.make(res, "coop")
+})
+
+
+run(lidl, "lidl", 5, (res)=>{
+    con.make(res, "lidl")
 })
 
 async function run(source, geo_fn, pageLen, callback){
