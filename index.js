@@ -10,13 +10,13 @@ const timeoutDefault = {
     deadline: 100000 // 10 second timeout
 }
 
-const tesco = "https://www.the-shops.co.uk/chainstore/224-sainsburys/"
+const tesco = "https://www.the-shops.co.uk/chainstore/173-tesco/"
 const sainsbury = "https://www.the-shops.co.uk/chainstore/224-sainsburys/"
 const aldi = "https://www.the-shops.co.uk/chainstore/241-aldi/"
-const asda = "https://www.the-shops.co.uk/chainstore/323-asda"
-const boots = "https://www.the-shops.co.uk/chainstore/252-boots"
-const coop = "https://www.the-shops.co.uk/chainstore/340-the-co-operative-food"
-const lidl = "https://www.the-shops.co.uk/chainstore/320-lidl"
+const asda = "https://www.the-shops.co.uk/chainstore/323-asda/"
+const boots = "https://www.the-shops.co.uk/chainstore/252-boots/"
+const coop = "https://www.the-shops.co.uk/chainstore/340-the-co-operative-food/"
+const lidl = "https://www.the-shops.co.uk/chainstore/320-lidl/"
 
 
 // IMPORTANT IMPORTANT IMPORTANT IMPORTANT IMPORTANT IMPORTANT IMPORTANT
@@ -28,20 +28,22 @@ let allAll = []
 
 // Pick one or run all
 
+// Get Tesco
+/*run(tesco, "tesco", 39, (res)=>{
+    con.make(res, "tesco")
+})
+
+
 // Get sainsbury
 run(sainsbury, "sainsbury", 14, (res)=>{
     con.make(res, "sainsbury")
 })
 
-// Get Tesco
-run(tesco, "tesco", 39, (res)=>{
-    con.make(res, "tesco")
-})
 
 // Get Aldi
 run(aldi, "aldi", 5, (res)=>{
     con.make(res, "aldi")
-})
+})*/
 
 // Get Asda
 run(asda, "asda", 5, (res)=>{
@@ -49,11 +51,11 @@ run(asda, "asda", 5, (res)=>{
 })
 
 // Get Boots
-run(boots, "boots", 47, (res)=>{
+/*run(boots, "boots", 47, (res)=>{
     con.make(res, "boots")
 })
 
-// Get Boots
+// Get Co-op
 run(coop, "coop", 39, (res)=>{
     con.make(res, "coop")
 })
@@ -61,7 +63,7 @@ run(coop, "coop", 39, (res)=>{
 
 run(lidl, "lidl", 5, (res)=>{
     con.make(res, "lidl")
-})
+})*/
 
 async function run(source, geo_fn, pageLen, callback){
 
@@ -101,8 +103,6 @@ function getTe(url, geo){
 
             } else {
 
-                
-
                 let $ = cheerio.load(res.text)
 
                 $('.shop').each((idx, el)=>{
@@ -131,7 +131,7 @@ function getTe(url, geo){
                     // Put name and address
                     tmp.id = id
                     tmp.sname = name
-                    tmp.add = add
+                    tmp.address = add
                     
                     // Get geo location
                     let fullGeo = getLocFromGeo(id, geo)
@@ -139,6 +139,8 @@ function getTe(url, geo){
                         tmp.longitude = fullGeo.lon
                         tmp.latitude = fullGeo.lat
                     }
+
+                    
 
                     all.push(tmp)
                     
