@@ -10,7 +10,7 @@ function make(all, name){
         }
 
         if(i == all.length - 1){
-            fs.writeFileSync(name + '.json', JSON.stringify(final))
+            fs.writeFileSync('./output/' + name + '.json', JSON.stringify(final))
         }
     }
 

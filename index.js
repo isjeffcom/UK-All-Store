@@ -13,6 +13,9 @@ const timeoutDefault = {
 const tesco = "https://www.the-shops.co.uk/chainstore/224-sainsburys/"
 const sainsbury = "https://www.the-shops.co.uk/chainstore/224-sainsburys/"
 const aldi = "https://www.the-shops.co.uk/chainstore/241-aldi/"
+const asda = "https://www.the-shops.co.uk/chainstore/323-asda"
+const boots = "https://www.the-shops.co.uk/chainstore/252-boots"
+const coop = "https://www.the-shops.co.uk/chainstore/340-the-co-operative-food"
 
 
 // IMPORTANT 
@@ -20,11 +23,9 @@ const aldi = "https://www.the-shops.co.uk/chainstore/241-aldi/"
 // Easy to find them on Chrome Dev Tool > Network > XHR
 
 
-/*let geo_s = JSON.parse(fs.readFileSync('./geo_' + 'sainsbury' + '.json', 'utf8'))
-let geo_t = JSON.parse(fs.readFileSync('./geo_' + 'tesco' + '.json', 'utf8'))
-let geo_aldi = JSON.parse(fs.readFileSync('./geo_' + 'aldi' + '.json', 'utf8'))*/
-
 let allAll = []
+
+// Pick one or run all
 
 // Get sainsbury
 run(sainsbury, "sainsbury", 14, (res)=>{
@@ -36,9 +37,29 @@ run(tesco, "tesco", 39, (res)=>{
     con.make(res, "tesco")
 })
 
+// Get Aldi
+run(aldi, "aldi", 5, (res)=>{
+    con.make(res, "aldi")
+})
+
+// Get Asda
+run(asda, "asda", 5, (res)=>{
+    con.make(res, "asda")
+})
+
+// Get Boots
+run(boots, "boots", 47, (res)=>{
+    con.make(res, "boots")
+})
+
+// Get Boots
+run(coop, "coop", 39, (res)=>{
+    con.make(res, "coop")
+})
+
 async function run(source, geo_fn, pageLen, callback){
 
-    let geo_file = JSON.parse(fs.readFileSync('./geo_' + geo_fn + '.json', 'utf8'))
+    let geo_file = JSON.parse(fs.readFileSync('./geos/geo_' + geo_fn + '.json', 'utf8'))
 
     //console.log(await getTe(teBase))
     for(let i=1;i<pageLen+1;i++){
