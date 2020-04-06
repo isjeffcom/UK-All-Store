@@ -46,7 +46,7 @@ run(aldi, "aldi", 5, (res)=>{
 })*/
 
 // Get Asda
-run(asda, "asda", 5, (res)=>{
+run(asda, "asda", 10, (res)=>{
     con.make(res, "asda")
 })
 
